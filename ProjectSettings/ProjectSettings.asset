@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 6b879bec2dbef4e5fb199385b79fd5b3
+  productGUID: 1006c7529c5354323b1c64bdb214b719
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Glowbat
+  productName: Tilemap test
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -608,14 +608,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Glowbat
+  metroPackageName: Tilemap test
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Glowbat
+  metroApplicationDescription: Tilemap test
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -686,10 +686,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 0aeb5fa5-e9d1-42ea-a32c-b336b52a7af7
+  cloudProjectId: a84d8b0a-1c3d-4a35-9920-4740f2c60b6b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Glowbat
+  projectName: Tilemap test
   organizationId: aj-levy
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

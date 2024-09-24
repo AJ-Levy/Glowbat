@@ -11,7 +11,9 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-
+        if (player.position.x > leftBound){
+            leftBound = player.position.x + 0.01f;
+        }
         Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
         //clamping
         targetPosition.x = Mathf.Max(targetPosition.x, leftBound);

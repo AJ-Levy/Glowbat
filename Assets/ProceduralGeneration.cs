@@ -1,57 +1,125 @@
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 public class ProceduralGeneration : MonoBehaviour
 {
-    public GameObject boundary;
-    public float segmentWidth = 5f;
-    public float heightRange = 3f;
-    public float baseFloorHeight = -5f;
-    public float baseRoofHeight = 5f;
-    public float noiseScale = 0.5f;
+    [SerializeField] int chunkSize = 16;
+    [SerializeField] int height = 4;
+    [SerializeField] int renderDistance = 3; 
 
-    private float lastGeneratedX;
-    private Transform playerTransform;
-    private float seed;
+    [SerializeField] float smoothness;
+    [SerializeField] TileBase groundTile;
+    [SerializeField] Tilemap groundTilemap;
+    float seed;
+    int[,] map;
+    Vector3 groundTilemapPos = new Vector3(-10,-5,0);
+
+    [SerializeField] Transform player;
+
+    HashSet<int> activeChunks = new HashSet<int>();
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {   
-        // random seed that defines the layout of the playthrough
-        seed = Random.Range(0f, 10000f);
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
-         // Generate initial floor and roof segments
-        GenerateSegment(playerTransform.position.x);
-        // ensure that it generates from beginning
-        lastGeneratedX = -2*segmentWidth;
+    {
+        groundTilemap.transform.position = groundTilemapPos;
+        seed = Random.Range(-10000,10000);
+        UpdateChunks();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (playerTransform.position.x > lastGeneratedX - 20f)
+        UpdateChunks();
+    }
+
+    void UpdateChunks()
+    {
+        // Determine the player's current chunk position
+        int playerChunkPosition = Mathf.FloorToInt(player.position.x / chunkSize);
+
+        // Generate new chunks
+        for (int x = 0; x <= renderDistance; x++)
         {
-            GenerateSegment(lastGeneratedX + segmentWidth);
+            int chunkPos = playerChunkPosition + x;
+            if (!activeChunks.Contains(chunkPos))
+            {
+                // Create a new chunk if it doesn't exist
+                activeChunks.Add(chunkPos);
+                int[,] chunkMap = GenerateChunk(chunkPos);
+                RenderMap(chunkMap, chunkPos);
+            }
+        }
+
+        // Unload old chunks
+        List<int> chunksToUnload = new List<int>();
+        foreach (var chunk in activeChunks)
+        {
+            if (Mathf.Abs(chunk - playerChunkPosition) > renderDistance)
+            {
+                chunksToUnload.Add(chunk);
+            }
+        }
+
+        foreach (var chunkPos in chunksToUnload)
+        {
+            activeChunks.Remove(chunkPos);
         }
     }
 
-    // needs to be improved but "good-enough" for now
-    void GenerateSegment(float xPosition)
+    private int[,] GenerateChunk(int chunkX)
     {
-        // Generate floor with a different offset for the noise
-        float floorHeight = baseFloorHeight + Mathf.PerlinNoise(xPosition * noiseScale + seed, 0) * heightRange; 
-        Vector3 floorPosition = new Vector3(xPosition, floorHeight, 0);
-        GameObject floor = Instantiate(boundary, floorPosition, Quaternion.identity);
-        floor.transform.localScale = new Vector3(segmentWidth, 0.1f, 1f); // Thin floor
-
-        // Generate roof with a different noise offset
-        float roofHeight = baseRoofHeight - Mathf.PerlinNoise(xPosition * noiseScale + seed + 1000, 0) * heightRange; 
-        Vector3 roofPosition = new Vector3(xPosition, roofHeight, 0);
-        GameObject roof = Instantiate(boundary, roofPosition, Quaternion.identity);
-        roof.transform.localScale = new Vector3(segmentWidth, 0.1f, 1f); // Thin roof
-
-        // Update the last generated X position
-        lastGeneratedX = xPosition;
+        int[,] map = GenerateArray(chunkSize, height, true);
+        return TerrainGeneration(map, chunkX);
     }
+
+    public int[,] GenerateArray(int width, int height, bool empty)
+    {
+        int[,] map = new int[width, height];
+        for(int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+
+                map[x,y]=empty ? 0 : 1;
+            }
+        }
+        return map;
+    }
+
+    public int[,] TerrainGeneration(int[,] map, int chunkX)
+    {
+        int perlinHeight;
+        for (int x = 0; x < chunkSize; x++)
+        {
+            perlinHeight = Mathf.RoundToInt(Mathf.PerlinNoise((chunkX * chunkSize + x) / smoothness, seed) * (height - 1)) + 1;
+            for (int y = 0; y < perlinHeight; y++)
+            {
+                if (y < height) 
+                {
+                    map[x, y] = 1; 
+                }
+            }
+        }
+        return map;
+    }
+
+    public void RenderMap(int[,] map, int chunkPosition)
+    {
+        for (int x = 0; x < chunkSize; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (map[x, y] == 1)
+                {
+                    groundTilemap.SetTile(new Vector3Int(chunkPosition * chunkSize + x, y, 0), groundTile);
+                }
+            }
+        }
+    }
+
 }
+
+

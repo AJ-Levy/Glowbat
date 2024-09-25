@@ -12,17 +12,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 newPosition;
     public float speed = 5f;
     private float playerOffset = 0.5f;
+    private LogicScript logic;
 
-    private float score;
-    private float maxScore;
-    private float incFactor;
-    public Text scoreText;
     
     void Start(){
         mainCamera = Camera.main;
         leftBound = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + playerOffset;
 
-        UpdateScoreDisplay();
+        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
     void FixedUpdate()
     {   
@@ -42,34 +39,16 @@ public class PlayerMovement : MonoBehaviour
         }
         // Move the player
         transform.position = newPosition;
-        UpdateScore();
+        logic.UpdateScore();
     }
+    
 
-     void UpdateScore()
+     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (score < 100) {
-            incFactor = 5f;
-        }
-        else if (score < 1000) {
-            incFactor = 10f;
-        } else {
-            incFactor = 100f;
-        } 
-        
-        // Calculate score in meters, round to the nearest incFactor
-        score = Mathf.Floor(transform.position.x / incFactor) * incFactor;
-        if (score > maxScore){
-            maxScore = score;
-        }
-        UpdateScoreDisplay();
-    }
-
-    void UpdateScoreDisplay()
-    {
-        // Update the score text in the UI
-        if (scoreText != null)
+        // Check if the player collides with the ground or roof tilemaps
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof"))
         {
-            scoreText.text = maxScore + " m";
+            logic.restartGame();
         }
     }
 }

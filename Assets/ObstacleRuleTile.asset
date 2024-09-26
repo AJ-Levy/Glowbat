@@ -9,25 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Script: {fileID: 11500000, guid: ea88eebcbdcdd47c0a6a6ac58870f27e, type: 3}
   m_Name: ObstacleRuleTile
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -510136293, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+  m_DefaultSprite: {fileID: 0}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
+    - {fileID: -1348635979, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: 863195809, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -1646399520, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -1973617466, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -900535107, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -773184123, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -1741476413, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
     - {fileID: -6343247290838838028, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
     - {fileID: -4923846578913340925, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
     - {fileID: 1629871961, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -900535107, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -1741476413, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -773184123, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -1646399520, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -1973617466, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: 863195809, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
-    - {fileID: -1348635979, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
+    - {fileID: -864200436, guid: 589c7789c0391834d87d7fd9adbccddc, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
@@ -46,3 +47,4 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: 1, y: -1, z: 0}
     m_RuleTransform: 0
+  scale: 1.75

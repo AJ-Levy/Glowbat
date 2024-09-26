@@ -50,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         {
             logic.restartGame();
         }
+
+        if(collision.gameObject.CompareTag("Firefly"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
 }

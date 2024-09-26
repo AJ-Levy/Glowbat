@@ -691,14 +691,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087bc50231ed94d239e74d6fc19e5737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkSize: 16
-  height: 4
-  renderDistance: 3
-  smoothness: 30
+  smoothness: 10
   groundTile: {fileID: 11400000, guid: 35efb5c6263a94740b82bc3c114e7133, type: 2}
   groundTilemap: {fileID: 288711831}
   roofTile: {fileID: 11400000, guid: 35efb5c6263a94740b82bc3c114e7133, type: 2}
   roofTilemap: {fileID: 518832804}
+  obstacleTile: {fileID: 11400000, guid: 284ac428f194747ccbe5a68b19136c2f, type: 2}
   player: {fileID: 203799924}
 --- !u!4 &518698835
 Transform:
@@ -1062,7 +1060,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

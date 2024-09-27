@@ -12,7 +12,7 @@ public class ProceduralGeneration : MonoBehaviour
     private int renderDistance = 1; 
     private int heightDiff = 6;
 
-    [SerializeField] float smoothness;
+    [SerializeField] float smoothness = 10;
     [SerializeField] TileBase groundTile;
     [SerializeField] Tilemap groundTilemap;
     [SerializeField] TileBase roofTile;
@@ -45,7 +45,7 @@ public class ProceduralGeneration : MonoBehaviour
 
         // update now that a "safe" spawn has been generated
         renderDistance = 3; 
-        height = 8;
+        height = 6;
     }
 
     void Update()

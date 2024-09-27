@@ -19,15 +19,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Light2D batGlow;  
     private float minRadius = 0f;
-    private float maxOuterRadius = 8f;
+    private float maxOuterRadius = 10f;
     private float innerRadiusFraction = 0.6f;
 
 
     private float glowDecayRate = 0.075f;
-    private float fireflyGlow = 0.5f;
-    private float minGlow = 0.1f; 
+    private float fireflyGlow = 0.75f;
+    private float minGlow = 0f; 
     private float maxGlow = 5f; 
-    private float startGlow = 2f;
+    private float startGlow = 3f;
     private float currentGlow;
 
     AudioManager audioManager;

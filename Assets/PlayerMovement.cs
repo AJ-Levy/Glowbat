@@ -16,10 +16,11 @@ public class PlayerMovement : MonoBehaviour
     private float playerOffset = 0.5f;
     private LogicScript logic;
     private SpriteRenderer spriteRenderer;
+    private bool isAlive; 
 
     private Light2D batGlow;  
     private float minRadius = 0f;
-    private float maxOuterRadius = 10f;
+    private float maxOuterRadius = 8f;
     private float innerRadiusFraction = 0.6f;
 
 
@@ -46,14 +47,18 @@ public class PlayerMovement : MonoBehaviour
 
         batGlow = GetComponent<Light2D>();
         currentGlow = startGlow;
+        isAlive = true;
     }
     void FixedUpdate()
     {   
         leftBound = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + playerOffset;
         
+        // disable movement once dead
+        if (!isAlive){return;}
+
         // Get input from WASD keys
-        float moveX = Input.GetAxis("Horizontal"); // A and D keys or Left and Right arrows
-        float moveY = Input.GetAxis("Vertical");   // W and S keys or Up and Down arrows
+        float moveX = Input.GetAxis("Horizontal"); 
+        float moveY = Input.GetAxis("Vertical");   
 
         if (moveX > 0)
         {
@@ -84,7 +89,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // Check if the player collides with the ground or roof tilemaps
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof"))
-        {
+        {   
+            isAlive = false;
             audioManager.PlaySFX(audioManager.death);
             StartCoroutine(RestartAfterDelay());
         }
@@ -113,7 +119,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Light Level:" + currentGlow.ToString());
         if (currentGlow <= minGlow)
         {
-            logic.restartGame();
+            isAlive = false;
+            logic.GameOver();
         }
     }
 
@@ -127,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Wait for the duration of the audio clip before restarting the game
         yield return new WaitForSeconds(audioManager.death.length);
-        logic.restartGame();
+        logic.GameOver();
     }
 
 

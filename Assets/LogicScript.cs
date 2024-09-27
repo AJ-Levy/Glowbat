@@ -19,6 +19,7 @@ public class LogicScript : MonoBehaviour
     private Button startBtn;
     private Text startBtnText;
     private bool isPaused = false;
+    private bool isGameOver = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +47,7 @@ public class LogicScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space)) 
+        if (!isGameOver && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))) 
         {
             if (isPaused)
                 ResumeGame();
@@ -147,6 +148,7 @@ public class LogicScript : MonoBehaviour
     }
 
     public void GameOver(){
+        isGameOver = true;
         UpdateHighScore();
         ShowMenu(true);
     }

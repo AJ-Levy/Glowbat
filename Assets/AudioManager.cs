@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip batflying;
     public AudioClip death;
     public AudioClip firefly;
+    public AudioClip menu;
 
     private void Start()
     {
@@ -21,5 +22,15 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         SFXSource.PlayOneShot(clip);
+    }
+
+    public void PlayMusic()
+    {
+        musicSource.Play();
+    }
+
+    public void PauseMusic()
+    {
+        musicSource.Pause();
     }
 }

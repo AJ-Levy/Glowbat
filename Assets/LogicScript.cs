@@ -20,7 +20,14 @@ public class LogicScript : MonoBehaviour
     private Text startBtnText;
     private bool isPaused = false;
     private bool isGameOver = false;
-    
+
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -138,6 +145,8 @@ public class LogicScript : MonoBehaviour
 
     public void ResumeGame()
     {
+        audioManager.PlaySFX(audioManager.menu);
+        audioManager.PlayMusic();
         HideMenu();
     }
 
@@ -170,8 +179,20 @@ public class LogicScript : MonoBehaviour
         // Logic to show the tutorial screen
     }
 
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            Debug.Log("Quit Game");
+        #else
+            // This will quit the application when running a build
+            Application.Quit();
+        #endif
+    }
+
     public void PauseGame()
     {
+        audioManager.PauseMusic();
+        audioManager.PlaySFX(audioManager.menu);
         ShowMenu(false);
         isPaused = true;
     }

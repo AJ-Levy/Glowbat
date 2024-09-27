@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
@@ -99,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             EatFirefly();
             Destroy(collision.gameObject);
+            audioManager.PlaySFX(audioManager.firefly);
         }
     }
 

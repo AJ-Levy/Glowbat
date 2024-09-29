@@ -126,7 +126,7 @@ public class PlayerManager : MonoBehaviour
             currentGlow = Mathf.Clamp(currentGlow, minGlow, maxGlow); 
         } else if (logic.getIsTutorial() && logic.getDecreaseGlow())
         {
-            currentGlow -= glowDecayRate * Time.deltaTime * 2;
+            currentGlow -= glowDecayRate * Time.deltaTime * 2.5f;
             currentGlow = Mathf.Clamp(currentGlow, 0.4f, maxGlow); 
         }
         

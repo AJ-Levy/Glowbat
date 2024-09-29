@@ -9,7 +9,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject spawner;
     [SerializeField] GameObject globalLight;
     private Light2D lightComp;
-    private float waitTime = 3f;
+    private float waitTime = 5f;
 
     private LogicScript logic;
 
@@ -94,6 +94,10 @@ public class TutorialManager : MonoBehaviour
 
             if (waitTime <= 0){
                 logic.setIsTutorial(false);
+
+                PlayerPrefs.SetInt("HasCompletedTutorial", 1);
+                PlayerPrefs.Save();
+                
                 logic.EndTutorial();
             }else{
                 waitTime -= Time.deltaTime;

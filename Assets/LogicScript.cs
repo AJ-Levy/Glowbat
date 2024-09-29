@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Runtime.CompilerServices;
 
 public class LogicScript : MonoBehaviour
 {
@@ -20,7 +21,10 @@ public class LogicScript : MonoBehaviour
     private Text startBtnText;
     private bool isPaused = false;
     private bool isGameOver = false;
+    private bool isTutorial = false;
+    private bool decreaseGlow = false;
 
+    private bool isEaten = false;
     AudioManager audioManager;
 
     private void Awake()
@@ -34,18 +38,30 @@ public class LogicScript : MonoBehaviour
         UpdateScoreDisplay();
 
         Transform textTransform = menuPanel.transform.Find("GameOverText");
-        menuText = textTransform.GetComponent<Text>();
+        if (textTransform != null)
+        {
+            menuText = textTransform.GetComponent<Text>();
+        }
 
         textTransform = menuPanel.transform.Find("UserHighScore");
-        userHighScore = textTransform.GetComponent<Text>();
+        if (textTransform != null)
+        {
+            userHighScore = textTransform.GetComponent<Text>();
+        }
 
         textTransform = menuPanel.transform.Find("HighScoreText");
-        highScoreText = textTransform.GetComponent<Text>();
+        if (textTransform != null)
+        {
+            highScoreText = textTransform.GetComponent<Text>();
+        }
 
         Transform btnTransform = menuPanel.transform.Find("StartBtn");
-        startBtn = btnTransform.GetComponent<Button>();
-        startBtnText = startBtn.GetComponentInChildren<Text>();
-        startBtn.onClick.AddListener(OnStartResumeButtonClicked);
+        if (btnTransform != null)
+        {
+            startBtn = btnTransform.GetComponent<Button>();
+            startBtnText = startBtn.GetComponentInChildren<Text>();
+            startBtn.onClick.AddListener(OnStartResumeButtonClicked);
+        }
         
         menuPanel.SetActive(false);
         LoadHighScore();
@@ -176,7 +192,14 @@ public class LogicScript : MonoBehaviour
 
     public void OpenTutorial()
     {
-        // Logic to show the tutorial screen
+        HideMenu();
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    public void EndTutorial()
+    {
+        HideMenu();
+        SceneManager.LoadScene("MainGame");
     }
 
     public void Quit()
@@ -195,5 +218,31 @@ public class LogicScript : MonoBehaviour
         audioManager.PlaySFX(audioManager.menu);
         ShowMenu(false);
         isPaused = true;
+    }
+
+    public bool getIsTutorial()
+    {
+        return isTutorial;
+    }
+
+    public void setIsTutorial(bool newIsTutorial)
+    {
+        isTutorial = newIsTutorial;
+    }
+
+    public bool getDecreaseGlow(){
+        return decreaseGlow;
+    }
+
+    public void setDecreaseGlow(bool b){
+        decreaseGlow = b;
+    }
+
+    public bool getIsEaten(){
+        return isEaten;
+    }
+
+    public void setIsEaten(bool b){
+        isEaten = b;
     }
 }

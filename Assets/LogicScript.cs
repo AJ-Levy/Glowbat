@@ -198,6 +198,8 @@ public class LogicScript : MonoBehaviour
     public void EndTutorial()
     {
         HideMenu();
+        PlayerPrefs.SetInt("HasCompletedTutorial", 1);
+        PlayerPrefs.Save();
         SceneLoader.instance.LoadScene("MainGame");
     }
 

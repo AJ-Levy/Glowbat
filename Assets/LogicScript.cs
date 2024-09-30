@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
-using System.Runtime.CompilerServices;
 
 public class LogicScript : MonoBehaviour
 {
@@ -35,6 +33,7 @@ public class LogicScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         UpdateScoreDisplay();
 
         Transform textTransform = menuPanel.transform.Find("GameOverText");
@@ -123,7 +122,7 @@ public class LogicScript : MonoBehaviour
     }
 
     private void restartGame(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneLoader.instance.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ShowMenu(bool isGameOver)
@@ -193,13 +192,13 @@ public class LogicScript : MonoBehaviour
     public void OpenTutorial()
     {
         HideMenu();
-        SceneManager.LoadScene("Tutorial");
+        SceneLoader.instance.LoadScene("Tutorial");
     }
 
     public void EndTutorial()
     {
         HideMenu();
-        SceneManager.LoadScene("MainGame");
+        SceneLoader.instance.LoadScene("MainGame");
     }
 
     public void Quit()

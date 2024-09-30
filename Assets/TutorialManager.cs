@@ -79,8 +79,8 @@ public class TutorialManager : MonoBehaviour
             
             if (waitTime <= 0){
                 globalLight.SetActive(true);
-                if (lightComp.intensity < 0.15){
-                    lightComp.intensity += 0.00005f;
+                if (lightComp.intensity < 0.2){
+                    lightComp.intensity += 0.05f * Time.deltaTime;
                 } else {
                     popUpIndex++;
                     waitTime = 4f;

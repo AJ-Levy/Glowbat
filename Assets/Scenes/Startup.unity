@@ -130,9 +130,10 @@ GameObject:
   - component: {fileID: 246356785}
   - component: {fileID: 246356787}
   - component: {fileID: 246356786}
+  - component: {fileID: 246356788}
   m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
+  m_Name: CrossFade
+  m_TagString: CrossFadePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,6 +195,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246356784}
   m_CullTransparentMesh: 1
+--- !u!95 &246356788
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246356784}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2dac50ad3224c4ea9be68921dee6579f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &325849436
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +297,7 @@ GameObject:
   - component: {fileID: 721968758}
   - component: {fileID: 721968757}
   - component: {fileID: 721968756}
+  - component: {fileID: 721968760}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -364,6 +388,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &721968760
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721968755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab6c3a490b84d4df7b47cd900a1b56bb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1310834273
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,8 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ecae8f11e254fd589d3892da1f36ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 246356786}
-  fadeDuration: 0.5
+  crossFadeAnimator: {fileID: 246356788}
 --- !u!4 &1604096240
 Transform:
   m_ObjectHideFlags: 0

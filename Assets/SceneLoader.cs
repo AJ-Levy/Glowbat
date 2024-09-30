@@ -1,40 +1,78 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public Image fadePanel; 
-    public float fadeDuration = 1f; 
+    public static SceneLoader instance; // Singleton instance
+
+    private Animator crossFadeAnimator;
+    private bool isLoadingScene = false;
+
+    void Awake()
+    {
+        // Check if there is already an instance of SceneLoader
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        // Start with the panel fully opaque (black)
-        fadePanel.color = new Color(0, 0, 0, 1);
-        
-        // Determine which scene to load based on the tutorial completion status
+
+        GameObject crossFadePanel = GameObject.FindWithTag("CrossFadePanel");
+        if (crossFadePanel != null)
+        {
+            crossFadeAnimator = crossFadePanel.GetComponent<Animator>();
+        }
+
         string sceneToLoad = PlayerPrefs.GetInt("HasCompletedTutorial", 0) == 0 ? "Tutorial" : "MainGame";
-        
-        // Start the fade out and load the next scene asynchronously
-        StartCoroutine(FadeOutAndLoadScene(sceneToLoad));
+
+        StartCoroutine(LoadSceneAsync(sceneToLoad));
     }
 
-    IEnumerator FadeOutAndLoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
-        // Begin asynchronous scene loading in the background
-        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = false; // Prevent the scene from activating immediately
-
-        // Fade out the black panel over time
-        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        if (!isLoadingScene)
         {
-            float alpha = Mathf.Lerp(1, 0, t / fadeDuration); // Interpolate the alpha value
-            fadePanel.color = new Color(0, 0, 0, alpha); // Apply the alpha to the panel's color
+            StartCoroutine(LoadSceneAsync(sceneName));
+        }
+    }
+
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        isLoadingScene = true;
+
+        // Find and assign the CrossFade panel in the current scene
+        GameObject crossFadePanel = GameObject.FindWithTag("CrossFadePanel");
+        if (crossFadePanel != null)
+        {
+            crossFadeAnimator = crossFadePanel.GetComponent<Animator>();
+            crossFadeAnimator.SetTrigger("Start"); // Trigger the fade-out animation
+        }
+
+        // Wait for the fade-out animation to finish
+        yield return new WaitForSeconds(1f);
+
+        // Load the next scene asynchronously
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
             yield return null;
         }
 
-        // After the fade-out completes, activate the new scene
-        asyncLoad.allowSceneActivation = true;
+        isLoadingScene = false;
     }
 }
-

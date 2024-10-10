@@ -1,0 +1,50 @@
+# Ignore the Library folder
+[Ll]ibrary/
+
+# Ignore the Temp folder
+[Tt]emp/
+
+# Ignore the Builds folder
+[Bb]uilds/
+[Bb]uild/
+
+# Ignore the Logs folder
+[Ll]ogs/
+
+# Ignore the obj folder
+[Oo]bj/
+
+# Ignore the UserSettings folder
+[Uu]serSettings/
+
+# Ignore Visual Studio specific files
+*.csproj
+*.sln
+*.userprefs
+
+# Ignore generated files
+*.pidb
+*.suo
+*.user
+*.unityproj
+*.booproj
+*.svd
+
+# Ignore cache files
+*.pdb
+*.mdb
+*.mdb-wipe
+
+# Ignore asset store packages
+*.unitypackage
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore backup files
+*.bak
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

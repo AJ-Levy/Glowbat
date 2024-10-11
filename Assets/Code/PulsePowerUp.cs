@@ -50,7 +50,7 @@ public class PulsePowerUp : PowerUp
 
         duration = transitionDuration;
         if (duration <= 0){
-            if (globalLight.intensity > pulseIntensity){
+            if (globalLight.intensity > 0f){
                 globalLight.intensity -= transitionMultiplier * Time.deltaTime;
             } 
         }else{

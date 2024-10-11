@@ -4,8 +4,8 @@ public class PowerUpManager : MonoBehaviour
 {
     [SerializeField] GameObject[] powerups;
     [SerializeField] PlayerManager playerManager;
-    private float minSpawnInterval = 20f;
-    private float maxSpawnInterval = 45f;
+    private float minSpawnInterval = 10f;//20f;
+    private float maxSpawnInterval = 10f;//45f;
 
     private float spawnInterval;
 

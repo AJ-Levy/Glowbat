@@ -195,4 +195,10 @@ public class PlayerManager : MonoBehaviour
         return shieldActive;
     }
 
+    public void IncreaseGlow(float glow)
+    {
+        currentGlow += glow;
+        currentGlow = Mathf.Clamp(currentGlow, 0f, 1f);
+    }
+
 }

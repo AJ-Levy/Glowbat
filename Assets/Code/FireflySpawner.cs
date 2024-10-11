@@ -5,10 +5,15 @@ public class FireflySpawner : MonoBehaviour
     [SerializeField] GameObject fireflyPrefab; 
     private Camera mainCamera;        
     private float minSpawnDistance = 20f;
-    private float maxSpawnDistance = 36f; 
+    private float maxSpawnDistance = 40f; 
 
     private float lastSpawnPosition; 
     private float nextSpawnPosition; 
+
+    private float spawnPos = 20f;
+    private float yVariation = 2f;
+
+    [SerializeField] PlayerManager player;
 
     void Start()
     {
@@ -24,8 +29,8 @@ public class FireflySpawner : MonoBehaviour
         if (distanceMoved >= nextSpawnPosition)
         {
             SpawnFirefly();
-            minSpawnDistance = 4 * 5;
-            minSpawnDistance = 4* 9;
+            minSpawnDistance = 5 * player.getPlayerSpeed();
+            maxSpawnDistance = 10 * player.getPlayerSpeed();
             nextSpawnPosition = Random.Range(minSpawnDistance, maxSpawnDistance);
             lastSpawnPosition = mainCamera.transform.position.x;
         }
@@ -34,8 +39,8 @@ public class FireflySpawner : MonoBehaviour
     void SpawnFirefly()
     {
         Vector3 spawnPosition = new Vector3(
-            mainCamera.transform.position.x + Random.Range(16f, 20f),
-            mainCamera.transform.position.y + Random.Range(-2f, 2f),
+            mainCamera.transform.position.x + spawnPos,
+            mainCamera.transform.position.y + Random.Range(-yVariation, yVariation),
             1f
         );
 

@@ -6,7 +6,7 @@ public class FireflyAI : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
     [SerializeField] float heightVariation = 1f;
-    private float maxDistanceFromCamera = 15f;
+    private float maxDistanceFromCamera = 20f;
      private Camera mainCamera; 
     private float originalYPos;
 

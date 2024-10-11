@@ -12,6 +12,7 @@ TagManager:
   - Spawner
   - Menu
   - CrossFadePanel
+  - GlobalLight
   layers:
   - Default
   - TransparentFX

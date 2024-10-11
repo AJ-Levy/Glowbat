@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 using Unity.VisualScripting;
+using System;
 
 
 public class PlayerManager : MonoBehaviour
@@ -34,6 +35,8 @@ public class PlayerManager : MonoBehaviour
     AudioManager audioManager;
 
     private TutorialSpawner tutSpawner;
+
+    private bool shieldActive = false;
 
 
     private void Awake()
@@ -98,13 +101,23 @@ public class PlayerManager : MonoBehaviour
 
      private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         // Check if the player collides with the ground or roof tilemaps
         if (!logic.getIsTutorial() && (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof")))
         {   
-            isAlive = false;
-            audioManager.PlaySFX(audioManager.death);
-            StartCoroutine(RestartAfterDelay());
+            // shield powerup check
+            if (shieldActive)
+            {
+                DeactivateShield();
+            }
+            else
+            {
+                isAlive = false;
+                audioManager.PlaySFX(audioManager.death);
+                StartCoroutine(RestartAfterDelay());
+            }
         }
+        
 
         if(collision.gameObject.CompareTag("Firefly"))
         {
@@ -164,6 +177,22 @@ public class PlayerManager : MonoBehaviour
     public float getPlayerSpeed()
     {
         return speed;
+    }
+
+    public void ActivateShield()
+    {
+        shieldActive = true;
+        // display shield visual
+    }
+
+    public void DeactivateShield()
+    {
+        shieldActive = false;
+        // hide shield visual
+    }
+
+    public bool isShieldActive() {
+        return shieldActive;
     }
 
 }

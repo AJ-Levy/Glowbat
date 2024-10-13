@@ -30,13 +30,13 @@ ___
 
 ## **Features**
 
-List the key features of your game:
-
-- Procedurally generated levels
-- Power-ups and abilities (e.g., shield, light pulse)
-- Randomly spawning enemies
-- Score and time tracking
-- Detailed sound effects and music
+- Procedurally generated cave terrain.
+- Dynamic light decay system.
+- Randomly spawning consumables that move (fireflies).
+- Score and time tracking.
+- Detailed sound effects and music.
+- Power-ups (e.g. shield, speed-up).
+- Interactive tutorial.
 
 ---
 

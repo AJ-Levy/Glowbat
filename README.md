@@ -78,12 +78,19 @@ Explain the game mechanics and rules.
 
 ## Credits
 
+### Development Team
+
 - **Game Design & Programming**: Ariel Levy
 - **Artwork & Playtesting**: Matthew Fleischman
 - **Sound & Music**: Mahomed Aadil Ally
 
-include sources for references:
-font
-some assets from DALL-E
+### Other Sources
+
+- **Font Name:** Pixel UniCode
+  **Designer:** anonymous-1000937
+  **License:** Creative Commons v3.0 
+  **Source:** [FontStruct](https://fontstruct.com/fontstructions/show/908795/pixel_unicode)
+  
+
 
 

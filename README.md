@@ -94,6 +94,6 @@ Explain the game mechanics and rules.
 - **Background** 
   - **Name:** A Parallax Cave Background
    - **Designer:** Nrin
-   - **License:** Reddit's User Agreement
+   - **License:** Creative Commons
    - **Source:** [Reddit](https://www.reddit.com/r/PixelArt/comments/61xvdq/ocwipcc_a_parallax_cave_background_i_made/)
    - **Adaptation**: The image was modified from its original form.

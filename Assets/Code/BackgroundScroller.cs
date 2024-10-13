@@ -3,10 +3,10 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     [Range(-1f,1f)]
-    public float scrollSpeed=0.1f;
+    [SerializeField] float scrollSpeed=0.1f;
     private float offset;
-    public Transform player;
-    public float widthMultiplier;
+    [SerializeField] Transform player;
+    [SerializeField] float widthMultiplier;
     private Material mat;
 
     void Start()

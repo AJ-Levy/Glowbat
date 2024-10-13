@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 using Unity.VisualScripting;
+using System;
 
 
 public class PlayerManager : MonoBehaviour
@@ -11,8 +12,9 @@ public class PlayerManager : MonoBehaviour
     private float leftBound;
     private Vector3 newPosition;
     private float speed = 4f;
+    private float speedStore = 4f;
     private float maxSpeed = 12f;
-    private float speedIncreaseRate = 0.005f;
+    private float speedIncreaseRate = 0.01f;
     private float playerOffset = 0.5f;
     private LogicScript logic;
     private SpriteRenderer spriteRenderer;
@@ -24,16 +26,19 @@ public class PlayerManager : MonoBehaviour
     private float innerRadiusFraction = 0.8f;
 
 
-    public float glowDecayRate = 0.015f;
+    public float glowDecayRate = 0.15f;
     public float fireflyGlow = 0.2f;
     private float minGlow = 0f; 
     private float maxGlow = 1f; 
-    public float startGlow = 0.7f;
+    public float startGlow = 0.5f;
     private float currentGlow;
 
     AudioManager audioManager;
 
     private TutorialSpawner tutSpawner;
+
+    private bool shieldActive = false;
+    public Animator animator;
 
 
     private void Awake()
@@ -98,13 +103,23 @@ public class PlayerManager : MonoBehaviour
 
      private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         // Check if the player collides with the ground or roof tilemaps
         if (!logic.getIsTutorial() && (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof")))
         {   
-            isAlive = false;
-            audioManager.PlaySFX(audioManager.death);
-            StartCoroutine(RestartAfterDelay());
+            // shield powerup check
+            if (shieldActive)
+            {
+                DeactivateShield();
+            }
+            else
+            {
+                isAlive = false;
+                audioManager.PlaySFX(audioManager.death);
+                StartCoroutine(RestartAfterDelay());
+            }
         }
+        
 
         if(collision.gameObject.CompareTag("Firefly"))
         {
@@ -164,6 +179,39 @@ public class PlayerManager : MonoBehaviour
     public float getPlayerSpeed()
     {
         return speed;
+    }
+
+    public void ActivateShield()
+    {
+        shieldActive = true;
+        animator.SetBool("ShieldActive", true);
+        // display shield visual
+    }
+
+    public void DeactivateShield()
+    {
+        shieldActive = false;
+        animator.SetBool("ShieldActive", false);
+        // hide shield visual
+    }
+
+    public bool isShieldActive() {
+        return shieldActive;
+    }
+
+    public void IncreaseGlow(float glow)
+    {
+        currentGlow += glow;
+        currentGlow = Mathf.Clamp(currentGlow, 0f, 1f);
+    }
+
+    public void SpeedBoost()
+    {
+        speed = speed + 2.4f;
+    }
+    public void ReduceSpeed()
+    {
+        speed = speed - 2.4f;
     }
 
 }

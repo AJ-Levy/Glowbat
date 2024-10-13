@@ -134,14 +134,16 @@ public class LogicScript : MonoBehaviour
         {
             userHighScore.text = highScore + " m";
             menuText.text = "Game Over";
-            //startBtnText.text = "Play Again";
+            Sprite buttonImg = Resources.Load<Sprite>("Images/PlayImage");
+            startBtn.GetComponent<Image>().sprite = buttonImg;
             highScoreText.text = "High Score";
         }
         else
         {   
             userHighScore.text = playerScore + " m";
             menuText.text = "Paused";
-            //startBtnText.text = "Resume";
+            Sprite buttonImg = Resources.Load<Sprite>("Images/ResumeImage");
+            startBtn.GetComponent<Image>().sprite = buttonImg;
             highScoreText.text = "Current Score";
         }
 

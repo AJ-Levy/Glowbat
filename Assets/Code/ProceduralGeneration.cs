@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class ProceduralGeneration : MonoBehaviour
 {
     private int chunkSize = 16;
-    private int height = 4;
+    private int height = 6;
     private int renderDistance = 1; 
     private int heightDiff = 6;
 
@@ -19,12 +20,14 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] Tilemap roofTilemap;
 
     [SerializeField] TileBase obstacleTile;
+    [SerializeField] TileBase crystalTile;
+    public GameObject CrystalLight;
     private float roofOffset = 5000f;
     float seed;
 
 
-    private float cameraWidth = 13f;
-    private float cameraHeight = 7f;
+    private float cameraWidth = 18f;
+    private float cameraHeight = 10f;
 
 
     [SerializeField] Transform player;
@@ -45,7 +48,7 @@ public class ProceduralGeneration : MonoBehaviour
 
         // update now that a "safe" spawn has been generated
         renderDistance = 3; 
-        height = 6;
+        height = 12;
     }
 
     void Update()
@@ -69,11 +72,11 @@ public class ProceduralGeneration : MonoBehaviour
 
                  // Generate and render ground chunk
                 int[,] groundChunkMap = GenerateChunk(chunkPos, 0, false);
-                RenderMap(groundChunkMap, chunkPos, groundTilemap, groundTile, obstacleTile, GroundHeightFunction, 0);
+                RenderMap(groundChunkMap, chunkPos, groundTilemap, groundTile, obstacleTile, crystalTile, GroundHeightFunction, 0, false);
             
             // Generate and render roof chunk
                 int[,] roofChunkMap = GenerateChunk(chunkPos, roofOffset, true);
-                RenderMap(roofChunkMap, chunkPos, roofTilemap, roofTile, obstacleTile, RoofHeightFunction, roofOffset);
+                RenderMap(roofChunkMap, chunkPos, roofTilemap, roofTile, obstacleTile, crystalTile, RoofHeightFunction, roofOffset, true);
             }
         }
 
@@ -155,7 +158,7 @@ public class ProceduralGeneration : MonoBehaviour
         return map;
     }
 
-    public void RenderMap(int[,] map, int chunkPosition, Tilemap tilemap, TileBase tile, TileBase obstacleTile, HeightFunction heightFunction, float offset)
+    public void RenderMap(int[,] map, int chunkPosition, Tilemap tilemap, TileBase tile, TileBase obstacleTile, TileBase crystalTile, HeightFunction heightFunction, float offset, bool roof)
     {
         for (int x = 0; x < chunkSize; x++)
         {
@@ -165,10 +168,33 @@ public class ProceduralGeneration : MonoBehaviour
                 {
                     tilemap.SetTile(new Vector3Int(chunkPosition * chunkSize + x, y, 0), tile);
 
-                    // obstacle
-                    if (y == heightFunction(x, chunkPosition, offset, seed, smoothness, height) - 1 && Random.value < 0.3f) 
+                    // obstacles
+                    if (y == heightFunction(x, chunkPosition, offset, seed, smoothness, height) - 1 && Random.value < 0.3f)
                     {
-                        tilemap.SetTile(new Vector3Int(chunkPosition * chunkSize + x, y + 1, 0), obstacleTile);
+                        if (Random.value < 0.95f)
+                        {
+                            tilemap.SetTile(new Vector3Int(chunkPosition * chunkSize + x, y + 1, 0), obstacleTile);
+                        }
+                        else
+                        {
+                            Vector3Int crystalPosition = new Vector3Int(chunkPosition * chunkSize + x, y + 1, 0);
+                            tilemap.SetTile(crystalPosition, crystalTile);
+                            // Instantiate the light at the crystal position
+                            float heightBump;
+                            if (roof)
+                            {
+                                heightBump = -0.7f;
+                            }
+                            else
+                            {
+                                heightBump = 0.7f;
+                            }
+                            Vector3 lightPosition = tilemap.CellToWorld(crystalPosition) + new Vector3(0.6f, heightBump, 0);
+                            GameObject light = Instantiate(CrystalLight, lightPosition, Quaternion.identity);
+                            light.GetComponent<Light2D>().intensity = 4f; // Adjust as needed
+
+              
+                        }
                     }
                 }
             }

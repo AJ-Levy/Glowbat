@@ -87,9 +87,9 @@ Explain the game mechanics and rules.
 ### Other Sources
 
 - **Font Name:** Pixel UniCode
-  **Designer:** anonymous-1000937
-  **License:** Creative Commons v3.0 
-  **Source:** [FontStruct](https://fontstruct.com/fontstructions/show/908795/pixel_unicode)
+   - **Designer:** anonymous-1000937
+   - **License:** Creative Commons v3.0 
+   - **Source:** [FontStruct](https://fontstruct.com/fontstructions/show/908795/pixel_unicode)
   
 
 

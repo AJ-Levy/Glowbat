@@ -18,7 +18,8 @@ public class PlayerManager : MonoBehaviour
     private float playerOffset = 0.5f;
     private LogicScript logic;
     private SpriteRenderer spriteRenderer;
-    private bool isAlive; 
+    private bool isAlive;
+    private Rigidbody2D rb;
 
     private Light2D batGlow;  
     private float minRadius = 0f;
@@ -61,7 +62,7 @@ public class PlayerManager : MonoBehaviour
     void FixedUpdate()
     {   
         leftBound = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + playerOffset;
-        
+
         // disable movement once dead
         if (!isAlive){return;}
 
@@ -105,7 +106,7 @@ public class PlayerManager : MonoBehaviour
     {
         
         // Check if the player collides with the ground or roof tilemaps
-        if (!logic.getIsTutorial() && (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof")))
+        if (!animator.GetBool("Dead") && !logic.getIsTutorial() && (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roof")))
         {   
             // shield powerup check
             if (shieldActive)
@@ -115,7 +116,10 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 isAlive = false;
+                animator.SetBool("Dead", !isAlive);
                 audioManager.PlaySFX(audioManager.death);
+                rb = GetComponent<Rigidbody2D>();
+                rb.gravityScale = 1f;
                 StartCoroutine(RestartAfterDelay());
             }
         }

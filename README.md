@@ -90,7 +90,10 @@ Explain the game mechanics and rules.
    - **Designer:** anonymous-1000937
    - **License:** Creative Commons v3.0 
    - **Source:** [FontStruct](https://fontstruct.com/fontstructions/show/908795/pixel_unicode)
-  
-
-
-
+ 
+- **Background** 
+  - **Name:** A Parallax Cave Background
+   - **Designer:** Nrin
+   - **License:** Reddit's User Agreement
+   - **Source:** [Reddit]([https://fontstruct.com/fontstructions/show/908795/pixel_unicode](https://www.reddit.com/r/PixelArt/comments/61xvdq/ocwipcc_a_parallax_cave_background_i_made/))
+   - **Adaptation**: The image was modified from its original form.

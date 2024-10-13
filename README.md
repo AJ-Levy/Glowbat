@@ -51,9 +51,8 @@ Provide instructions to install the game:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/your-game.git
-   cd your-game
-
+   git clone https://github.com/AJ-Levy/Glowbat.git
+   ```
 ...
 
 ---

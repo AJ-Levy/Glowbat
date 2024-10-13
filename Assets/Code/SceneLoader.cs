@@ -49,6 +49,10 @@ public class SceneLoader : MonoBehaviour
     {
         isLoadingScene = true;
 
+        // Load the next scene asynchronously
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+
         // Find and assign the CrossFade panel in the current scene
         GameObject crossFadePanel = GameObject.FindWithTag("CrossFadePanel");
         if (crossFadePanel != null)
@@ -58,20 +62,15 @@ public class SceneLoader : MonoBehaviour
         }
 
         // Wait for the fade-out animation to finish
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.95f);
 
-        // Load the next scene asynchronously
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = false;
-
-        while (!asyncLoad.isDone)
+         while (asyncLoad.progress < 0.9f)
         {
-            if (asyncLoad.progress >= 0.9f)
-            {
-                asyncLoad.allowSceneActivation = true;
-            }
             yield return null;
         }
+
+        // Activate the new scene
+        asyncLoad.allowSceneActivation = true; 
 
         isLoadingScene = false;
     }

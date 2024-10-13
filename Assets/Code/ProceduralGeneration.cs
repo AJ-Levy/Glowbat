@@ -6,6 +6,20 @@ using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+// class to keep track of crystal lights and their
+// chunk positions
+[System.Serializable]
+public class CrystalLightInfo
+{
+    public GameObject lightObject;
+    public int chunkPosition;
+
+    public CrystalLightInfo(GameObject lightObject, int chunkPosition)
+    {
+        this.lightObject = lightObject;
+        this.chunkPosition = chunkPosition;
+    }
+}
 public class ProceduralGeneration : MonoBehaviour
 {
     private int chunkSize = 16;
@@ -22,6 +36,7 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] TileBase obstacleTile;
     [SerializeField] TileBase crystalTile;
     public GameObject CrystalLight;
+    private List<CrystalLightInfo> crystalLights = new List<CrystalLightInfo>();
     private float roofOffset = 5000f;
     float seed;
 
@@ -92,6 +107,15 @@ public class ProceduralGeneration : MonoBehaviour
 
         foreach (var chunkPos in chunksToUnload)
         {
+            for (int i = crystalLights.Count - 1; i >= 0; i--)
+            {
+                // delete crystal lights in unloaded chunks
+                if (crystalLights[i].chunkPosition == chunkPos)
+                {
+                    Destroy(crystalLights[i].lightObject); 
+                    crystalLights.RemoveAt(i);               
+                }
+            }
             activeChunks.Remove(chunkPos);
         }
     }
@@ -179,21 +203,14 @@ public class ProceduralGeneration : MonoBehaviour
                         {
                             Vector3Int crystalPosition = new Vector3Int(chunkPosition * chunkSize + x, y + 1, 0);
                             tilemap.SetTile(crystalPosition, crystalTile);
+
                             // Instantiate the light at the crystal position
-                            float heightBump;
-                            if (roof)
-                            {
-                                heightBump = -0.7f;
-                            }
-                            else
-                            {
-                                heightBump = 0.7f;
-                            }
+                            float heightBump = roof ? -0.7f : 0.7f;
                             Vector3 lightPosition = tilemap.CellToWorld(crystalPosition) + new Vector3(0.6f, heightBump, 0);
                             GameObject light = Instantiate(CrystalLight, lightPosition, Quaternion.identity);
                             light.GetComponent<Light2D>().intensity = 4f; // Adjust as needed
 
-              
+                            crystalLights.Add(new CrystalLightInfo(light, chunkPosition));
                         }
                     }
                 }

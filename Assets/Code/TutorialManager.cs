@@ -92,12 +92,7 @@ public class TutorialManager : MonoBehaviour
 
         } else if (popUpIndex == 5) {
 
-            if (waitTime <= 0){
-                logic.setIsTutorial(false);
-
-                PlayerPrefs.SetInt("HasCompletedTutorial", 1);
-                PlayerPrefs.Save();
-                
+            if (waitTime <= 0){       
                 logic.EndTutorial();
             }else{
                 waitTime -= Time.deltaTime;

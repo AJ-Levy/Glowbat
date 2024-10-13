@@ -40,7 +40,6 @@ public class ProceduralGeneration : MonoBehaviour
     private float roofOffset = 5000f;
     float seed;
 
-
     private float cameraWidth = 18f;
     private float cameraHeight = 10f;
 

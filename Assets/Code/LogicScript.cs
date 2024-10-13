@@ -17,6 +17,8 @@ public class LogicScript : MonoBehaviour
     private Text menuText;
     private Button startBtn;
     private Text startBtnText;
+    private Button pauseBtn;
+    private Image pauseBtnImage;
     private bool isPaused = false;
     private bool isGameOver = false;
     private bool isTutorial = false;
@@ -52,6 +54,13 @@ public class LogicScript : MonoBehaviour
         if (textTransform != null)
         {
             highScoreText = textTransform.GetComponent<Text>();
+        }
+
+        GameObject pauseBtnObject = GameObject.Find("Pause");
+        if (pauseBtnObject != null)
+        {
+            pauseBtn = pauseBtnObject.GetComponent<Button>();
+            pauseBtnImage = pauseBtn.GetComponent<Image>();
         }
 
         Transform btnTransform = menuPanel.transform.Find("StartBtn");
@@ -129,6 +138,7 @@ public class LogicScript : MonoBehaviour
     {
         menuPanel.SetActive(true);
         scoreText.text = "";
+        pauseBtnImage.enabled = false;
 
         if (isGameOver)
         {
@@ -154,6 +164,7 @@ public class LogicScript : MonoBehaviour
     public void HideMenu()
     {
         menuPanel.SetActive(false);
+        pauseBtnImage.enabled = true;
         // Unfreeze the game
         Time.timeScale = 1f; 
         isPaused = false;
@@ -202,6 +213,7 @@ public class LogicScript : MonoBehaviour
     public void EndTutorial()
     {
         HideMenu();
+        isTutorial = false;
         PlayerPrefs.SetInt("HasCompletedTutorial", 1);
         PlayerPrefs.Save();
         SceneLoader.instance.LoadScene("MainGame");

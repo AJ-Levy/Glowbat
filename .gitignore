@@ -48,3 +48,6 @@
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore VSCode stuff
+.vscode/*

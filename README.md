@@ -66,8 +66,13 @@ Explain the game mechanics and rules.
 
 ## Controls
 
-- **Arrow Keys/WASD**: Move the player.
-- **`Esc` or `Space`**: Pause the game.
+| Key            | Action                      |
+|----------------|-----------------------------|
+| `W` / `↑`      | Move Up                     |
+| `A` / `←`      | Move Left                   |
+| `S` / `↓`      | Move Down                   |
+| `D` / `→`      | Move Right                  |
+| `Esc` / `Space`| Pause / Open Menu           |
 
 ---
 

@@ -43,8 +43,6 @@ ___
 
 ## **Installation**
 
-Provide instructions to install the game:
-
 ### Prerequisites:
 - Unity (version 6.0 or higher recommended)
 

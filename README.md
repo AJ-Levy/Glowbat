@@ -25,6 +25,7 @@ ___
 3. [How to Play](#how-to-play)
 4. [Controls](#controls)
 5. [Credits](#credits)
+6. [Coming Soon](#coming-soon)
 
 ---
 
@@ -97,3 +98,8 @@ Explain the game mechanics and rules.
    - **License:** Creative Commons
    - **Source:** [Reddit](https://www.reddit.com/r/PixelArt/comments/61xvdq/ocwipcc_a_parallax_cave_background_i_made/)
    - **Adaptation**: The image was modified from its original form.
+
+## Coming Soon
+- Cave Biomes
+- More Powerups
+...

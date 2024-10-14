@@ -46,7 +46,7 @@ ___
 Provide instructions to install the game:
 
 ### Prerequisites:
-- Software or dependencies required to run the game (e.g., Unity, Python, etc.).
+- Unity (version 6.0 or higher recommended)
 
 ### Steps:
 
@@ -54,13 +54,37 @@ Provide instructions to install the game:
    ```bash
    git clone https://github.com/AJ-Levy/Glowbat.git
    ```
-...
+
+2. **Open the project in Unity:**
+   - Launch Unity Hub and click on the `Open` button.
+   - Browse to the folder where you cloned the repository and select it.
+
+3. **Install necessary dependencies (if any):**
+
+   - If the project uses any specific Unity packages, ensure that they are       installed. Unity will prompt you to download any missing packages when the project is loaded.
+
+4. **Build and run the game:**
+   - Go to `File` > `Build Settings`, choose your platform, and click `Build and Run` to test the game.
 
 ---
 
 ## How To Play
 
-Explain the game mechanics and rules.
+In *Glowbat*, you control a bat exploring dark, mysterious caves. The goal is to survive as long as possible by keeping the cave illuminated and avoiding obstacles.
+
+### Game Mechanics:
+- **Fireflies**: Collect randomly spawning fireflies to increase your light radius. The more fireflies you consume, the brighter your surroundings. However, the light will decay over time, so keep collecting fireflies to stay alive.
+- **Obstacles**: Watch out for cave walls and obstacles. Colliding with them will end the game.
+
+### Power-Ups:
+- **Shield**: Grants temporary protection from one collision.
+- **Speed Boost**: Temporarily increases your speed for some time.
+
+### Game Over:
+The game ends if your light completely fades or if you collide with obstacles.
+
+### Score:
+Your score reflects the depth of your exploration, increasing as you venture deeper into the cave. 
 
 ---
 

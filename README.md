@@ -72,6 +72,9 @@ Provide instructions to install the game:
 
 In *Glowbat*, you control a bat exploring dark, mysterious caves. The goal is to survive as long as possible by keeping the cave illuminated and avoiding obstacles.
 
+### Score:
+Your score reflects the depth of your exploration, increasing as you venture deeper into the cave. 
+
 ### Game Mechanics:
 - **Fireflies**: Collect randomly spawning fireflies to increase your light radius. The more fireflies you consume, the brighter your surroundings. However, the light will decay over time, so keep collecting fireflies to stay alive.
 - **Obstacles**: Watch out for cave walls and obstacles. Colliding with them will end the game.
@@ -82,9 +85,6 @@ In *Glowbat*, you control a bat exploring dark, mysterious caves. The goal is to
 
 ### Game Over:
 The game ends if your light completely fades or if you collide with obstacles.
-
-### Score:
-Your score reflects the depth of your exploration, increasing as you venture deeper into the cave. 
 
 ---
 

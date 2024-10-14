@@ -101,5 +101,5 @@ Explain the game mechanics and rules.
 
 ## Coming Soon
 - Cave Biomes
-- More Powerups
-...
+- More Powerups  
+  ...

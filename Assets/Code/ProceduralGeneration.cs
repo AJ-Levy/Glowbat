@@ -6,6 +6,31 @@ using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+/// <summary>
+/// Class neccesary to keep track of crystal's and their lights for removal when out of view.
+/// </summary>
+[System.Serializable]
+public class CrystalLightInfo
+{
+    public GameObject lightObject;
+    public int chunkPosition;
+
+    /// <summary>
+    /// Simple constructor that instantiates a CrystalLightInfo object.
+    /// </summary>
+    /// <param name="lightObject">The light associated with a crystal.</param>
+    /// <param name="chunkPosition">The chunk it was spawned in.</param>
+    public CrystalLightInfo(GameObject lightObject, int chunkPosition)
+    {
+        this.lightObject = lightObject;
+        this.chunkPosition = chunkPosition;
+    }
+}
+
+/// <summary>
+/// A class that procedurally generates cave terrain with obstacles and crystals.
+/// Chunking is used, with out of view chunks unloaded to save memory.
+/// </summary>
 public class ProceduralGeneration : MonoBehaviour
 {
     private int chunkSize = 16;
@@ -22,9 +47,9 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] TileBase obstacleTile;
     [SerializeField] TileBase crystalTile;
     public GameObject CrystalLight;
+    private List<CrystalLightInfo> crystalLights = new List<CrystalLightInfo>();
     private float roofOffset = 5000f;
     float seed;
-
 
     private float cameraWidth = 18f;
     private float cameraHeight = 10f;
@@ -37,7 +62,9 @@ public class ProceduralGeneration : MonoBehaviour
     public delegate int HeightFunction(int x, int chunkX, float offset, float seed, float smoothness, int height);
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /// <summary>
+    /// Some intialisation and sets (forgiving) spawn chunk parameters.
+    /// </summary>
     void Start()
     {
         groundTilemap.transform.position = new Vector3(-cameraWidth,-cameraHeight,0);
@@ -51,11 +78,18 @@ public class ProceduralGeneration : MonoBehaviour
         height = 12;
     }
 
+    /// <summary>
+    /// Update the chunks rendered/loaded.
+    /// </summary>
     void Update()
     {
         UpdateChunks();
     }
 
+    /// <summary>
+    /// Determine the player's current chunk and load next `renderDistance` chunks,
+    /// and unload those that have been passed (i.e. aren't in view).
+    /// </summary>
     void UpdateChunks()
     {
         // Determine the player's current chunk position
@@ -92,10 +126,26 @@ public class ProceduralGeneration : MonoBehaviour
 
         foreach (var chunkPos in chunksToUnload)
         {
+            for (int i = crystalLights.Count - 1; i >= 0; i--)
+            {
+                // delete crystal lights in unloaded chunks
+                if (crystalLights[i].chunkPosition == chunkPos)
+                {
+                    Destroy(crystalLights[i].lightObject); 
+                    crystalLights.RemoveAt(i);               
+                }
+            }
             activeChunks.Remove(chunkPos);
         }
     }
 
+    /// <summary>
+    /// Generates a single chunk under the desired conditions.
+    /// </summary>
+    /// <param name="chunkX">The chunk postion.</param>
+    /// <param name="perlinOffset">The offset on the perlin noise terrain generation.</param>
+    /// <param name="isRoof">Whether the roof or floor is being generated.</param>
+    /// <returns>A map containing the generated chunk (either floor or roof components).</returns>
     private int[,] GenerateChunk(int chunkX, float perlinOffset, bool isRoof)
     {
         int[,] map = GenerateArray(chunkSize, height, true);
@@ -109,7 +159,14 @@ public class ProceduralGeneration : MonoBehaviour
             return TerrainGeneration(map, chunkX, perlinOffset, GroundHeightFunction);
         }
     }
-
+    
+    /// <summary>
+    /// Creates and intialises a 2D array.
+    /// </summary>
+    /// <param name="width">The width (x dimension) of the array.</param>
+    /// <param name="height">The height (y dimension) of the array.</param>
+    /// <param name="empty">Whether the array element is filled or not</param>
+    /// <returns>A map containing filled or empty elements.</returns>
     public int[,] GenerateArray(int width, int height, bool empty)
     {
         int[,] map = new int[width, height];
@@ -124,11 +181,32 @@ public class ProceduralGeneration : MonoBehaviour
         return map;
     }
 
+    /// <summary>
+    /// Function that generates a random ground terrain constrained by a certain height.
+    /// </summary>
+    /// <param name="x">The horizontal postion of the tile.</param>
+    /// <param name="chunkX">The chunk the tile is located in.</param>
+    /// <param name="offset">The offset of the perlin noise function.</param>
+    /// <param name="seed"The seed of the perlin noise function.</param>
+    /// <param name="smoothness">The smoothness of the terrain.</param>
+    /// <param name="height">The maximum height of the terrain.</param>
+    /// <returns>An integer height.</returns>
     public int GroundHeightFunction(int x, int chunkX, float offset, float seed, float smoothness, int height)
     {
         return Mathf.RoundToInt(Mathf.PerlinNoise((chunkX * chunkSize + x) / smoothness, seed) * height);
     }
 
+    /// <summary>
+    /// Function that generates a random roof terrain constrained by a certain height
+    /// and that adheres to a minimum ground height separation condition.
+    /// </summary>
+    /// <param name="x">The horizontal postion of the tile.</param>
+    /// <param name="chunkX">The chunk the tile is located in.</param>
+    /// <param name="offset">The offset of the perlin noise function.</param>
+    /// <param name="seed"The seed of the perlin noise function.</param>
+    /// <param name="smoothness">The smoothness of the terrain.</param>
+    /// <param name="height">The maximum height of the terrain.</param>
+    /// <returns>An integer height.</returns>
     public int RoofHeightFunction(int x, int chunkX, float offset, float seed, float smoothness, int height)
     {
         // ensures a separation of at least `heightDiff` between the ground and roof
@@ -142,6 +220,14 @@ public class ProceduralGeneration : MonoBehaviour
         return roofHeight;
     }
 
+    /// <summary>
+    /// Generates terrain using a specified height function.
+    /// </summary>
+    /// <param name="map">The map containing the chunk</param>
+    /// <param name="chunkX">The chunk postion.</param>
+    /// <param name="offset">The perlin noise offset.</param>
+    /// <param name="heightFunction">The function that determines the height of the terrain.</param>
+    /// <returns>A map containing the generated terrain.</returns>
     public int[,] TerrainGeneration(int[,] map, int chunkX, float offset, HeightFunction heightFunction)
     {
         for (int x = 0; x < chunkSize; x++)
@@ -158,6 +244,18 @@ public class ProceduralGeneration : MonoBehaviour
         return map;
     }
 
+    /// <summary>
+    /// Sets the tiles of a map appropriately and randomly adds obstacles (including crystals with ambient light).
+    /// </summary>
+    /// <param name="map">The populated chunk map.</param>
+    /// <param name="chunkPosition">The chunk postion.</param>
+    /// <param name="tilemap">The appropriate tile map</param>
+    /// <param name="tile">The terrain rule tile.</param>
+    /// <param name="obstacleTile">The stagmite/stalactite rule tile.</param>
+    /// <param name="crystalTile"><The crystal tile./param>
+    /// <param name="heightFunction">The function that determines the height of the terrain.</param>
+    /// <param name="offset">The perlin noise offset.</param>
+    /// <param name="roof">Whether the roof or floor is being rendered.</param>
     public void RenderMap(int[,] map, int chunkPosition, Tilemap tilemap, TileBase tile, TileBase obstacleTile, TileBase crystalTile, HeightFunction heightFunction, float offset, bool roof)
     {
         for (int x = 0; x < chunkSize; x++)
@@ -179,21 +277,14 @@ public class ProceduralGeneration : MonoBehaviour
                         {
                             Vector3Int crystalPosition = new Vector3Int(chunkPosition * chunkSize + x, y + 1, 0);
                             tilemap.SetTile(crystalPosition, crystalTile);
+
                             // Instantiate the light at the crystal position
-                            float heightBump;
-                            if (roof)
-                            {
-                                heightBump = -0.7f;
-                            }
-                            else
-                            {
-                                heightBump = 0.7f;
-                            }
+                            float heightBump = roof ? -0.7f : 0.7f;
                             Vector3 lightPosition = tilemap.CellToWorld(crystalPosition) + new Vector3(0.6f, heightBump, 0);
                             GameObject light = Instantiate(CrystalLight, lightPosition, Quaternion.identity);
                             light.GetComponent<Light2D>().intensity = 4f; // Adjust as needed
 
-              
+                            crystalLights.Add(new CrystalLightInfo(light, chunkPosition));
                         }
                     }
                 }

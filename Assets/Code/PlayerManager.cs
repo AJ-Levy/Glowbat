@@ -89,6 +89,8 @@ public class PlayerManager : MonoBehaviour
         }
         // Move the player
         transform.position = newPosition;
+
+        // Update score
         logic.UpdateScore();
 
 

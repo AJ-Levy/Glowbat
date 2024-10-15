@@ -45,9 +45,10 @@ public class LogicScript : MonoBehaviour
     /// </summary>
     void Start()
     {
+
         textOutline = scoreText.GetComponent<Outline>();
         UpdateScoreDisplay();
-
+        
         Transform textTransform = menuPanel.transform.Find("GameOverText");
         if (textTransform != null)
         {
@@ -186,7 +187,10 @@ public class LogicScript : MonoBehaviour
     public void ShowMenu(bool isGameOver)
     {
         menuPanel.SetActive(true);
-        scoreText.text = "";
+        if (scoreText != null && scoreText.gameObject.activeInHierarchy)
+        {
+            scoreText.text = "";
+        }
         pauseBtnImage.enabled = false;
 
         if (isGameOver)

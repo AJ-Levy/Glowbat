@@ -489,9 +489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 198f81682557c40de906d8877025b8b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowDecayRate: 0.015
-  fireflyGlow: 0.2
-  startGlow: 0.7
   animator: {fileID: 203799925}
 --- !u!1 &206337377
 GameObject:
@@ -2344,6 +2341,7 @@ GameObject:
   - component: {fileID: 1197077432}
   - component: {fileID: 1197077434}
   - component: {fileID: 1197077433}
+  - component: {fileID: 1197077435}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -2412,6 +2410,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197077431}
   m_CullTransparentMesh: 1
+--- !u!114 &1197077435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197077431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1260042911
 GameObject:
   m_ObjectHideFlags: 0

@@ -63,6 +63,9 @@ ___
 
 4. **Build and run the game:**
    - Go to `File` > `Build Settings`, choose your platform, and click `Build and Run` to test the game.
+  
+5. *(Optional)* **Playing the Game in Unity**:
+   - To play the game within Unity, navigate to `Assets` > `Scenes`, and double-click `Startup` before pressing the `Play` button.
 
 ---
 

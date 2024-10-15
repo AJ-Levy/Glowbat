@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip gameOver;
     public AudioClip powerUp;
     public AudioClip shieldBreak;
+    public AudioClip milestone;
 
     private void Start()
     {

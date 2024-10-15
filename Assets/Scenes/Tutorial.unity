@@ -529,6 +529,7 @@ MonoBehaviour:
   gameOver: {fileID: 8300000, guid: 082e84c0a95aea148a1c4b8fc5e537e2, type: 3}
   powerUp: {fileID: 8300000, guid: f0d9433006e3c9f41818714f5950f692, type: 3}
   shieldBreak: {fileID: 8300000, guid: 970c296bdb55d0641a5acb974c8aec74, type: 3}
+  milestone: {fileID: 8300000, guid: f12dac8addefc98499a06ab4715a43f0, type: 3}
 --- !u!4 &206337379
 Transform:
   m_ObjectHideFlags: 0

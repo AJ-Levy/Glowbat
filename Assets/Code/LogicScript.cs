@@ -31,6 +31,7 @@ public class LogicScript : MonoBehaviour
 
     private bool isEaten = false;
     AudioManager audioManager;
+    private int lastMilestone = 0;  // Track the last milestone achieved
 
     // <summary>
     /// Keeps the AudioManger accessible.
@@ -149,7 +150,24 @@ public class LogicScript : MonoBehaviour
             textOutline.effectColor = new Color32(212, 175, 55, 255);
         } 
         
-        
+        CheckMilestone();
+    }
+
+    private void CheckMilestone()
+    {
+        int[] milestones = { 100, 500, 1000, 2500 };
+
+        foreach (int milestone in milestones)
+        {
+            // If playerScore reaches a new milestone, play the sound
+            if (playerScore >= milestone && lastMilestone < milestone)
+            {
+                Debug.Log($"Milestone reached: {milestone}");  // Debugging output
+                audioManager.PlaySFX(audioManager.milestone);  // Play sound
+                lastMilestone = milestone;  // Update the last milestone
+                break;  // Stop checking further milestones
+            }
+        }
     }
 
     /// <summary>

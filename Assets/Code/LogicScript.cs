@@ -153,6 +153,9 @@ public class LogicScript : MonoBehaviour
         CheckMilestone();
     }
 
+    /// <summary>
+    /// Plays a sound to indicate when a player reaches a milestone.
+    /// </summary>
     private void CheckMilestone()
     {
         int[] milestones = { 100, 500, 1000, 2500 };
@@ -162,7 +165,7 @@ public class LogicScript : MonoBehaviour
             // If playerScore reaches a new milestone, play the sound
             if (playerScore >= milestone && lastMilestone < milestone)
             {
-                Debug.Log($"Milestone reached: {milestone}");  // Debugging output
+                //Debug.Log($"Milestone reached: {milestone}");  // Debugging output
                 audioManager.PlaySFX(audioManager.milestone);  // Play sound
                 lastMilestone = milestone;  // Update the last milestone
                 break;  // Stop checking further milestones

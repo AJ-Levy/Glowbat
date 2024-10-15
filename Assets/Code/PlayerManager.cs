@@ -23,6 +23,9 @@ public class PlayerManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isAlive;
     private Rigidbody2D rb;
+    private Vector3 originalScale;
+    private float originalColliderRadius;
+    private CircleCollider2D characterCollider;
 
     private Light2D batGlow;  
     private float minRadius = 0f;
@@ -30,7 +33,7 @@ public class PlayerManager : MonoBehaviour
     private float innerRadiusFraction = 0.8f;
 
 
-    private float glowDecayRate = 0.02f;
+    private float glowDecayRate = 0.018f;
     private float fireflyGlow = 0.2f;
     private float minGlow = 0f; 
     private float maxGlow = 1f; 
@@ -66,6 +69,10 @@ public class PlayerManager : MonoBehaviour
         batGlow = GetComponent<Light2D>();
         currentGlow = startGlow;
         isAlive = true;
+
+        originalScale = transform.localScale;
+        characterCollider = GetComponent<CircleCollider2D>();
+        originalColliderRadius = characterCollider.radius;
     }
 
     /// <summary>
@@ -275,6 +282,24 @@ public class PlayerManager : MonoBehaviour
     public void ReduceSpeed()
     {
         speed = speed - 2.4f;
+    }
+
+    /// <summary>
+    /// Decreases the bat's size by half and the collider by a third.
+    /// </summary>
+    public void Shrink()
+    {
+        transform.localScale = originalScale * 0.5f;
+        characterCollider.radius = originalColliderRadius * 0.66f;
+    }
+
+    /// <summary>
+    /// Restores bat to original size.
+    /// </summary>
+    public void UnShrink()
+    {
+        transform.localScale = originalScale;
+        characterCollider.radius = originalColliderRadius;
     }
 
 }

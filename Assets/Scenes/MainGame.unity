@@ -1667,6 +1667,7 @@ MonoBehaviour:
   powerups:
   - {fileID: 2489657652674069263, guid: e6352fadc8f1d4402ae568111f4de681, type: 3}
   - {fileID: 1191963586869172793, guid: cc061cb1378ec442fab9d1a0bb5d7aa3, type: 3}
+  - {fileID: 1191963586869172793, guid: 9ec494f89ab37bc44a84a9cbfea9bc45, type: 3}
   playerManager: {fileID: 822598128}
 --- !u!4 &788120512
 Transform:

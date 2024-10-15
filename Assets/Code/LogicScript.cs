@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class LogicScript : MonoBehaviour
 {
+    /// <summary>
+    /// This class handles game logic, such as: scoring, the menus, and the tutorial.
+    /// </summary>
     private int playerScore;
     private int score;
     private int highScore;
@@ -31,13 +34,17 @@ public class LogicScript : MonoBehaviour
 
     private void Awake()
     {
+        // <summary>
+        /// Keeps the AudioManger accessible.
+        /// </summary>
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        // <summary>
+        /// Sets starting score and binds some screen components to variables.
+        /// </summary>
         textOutline = scoreText.GetComponent<Outline>();
         UpdateScoreDisplay();
 
@@ -81,6 +88,9 @@ public class LogicScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // <summary>
+        /// Allows the user to pause the game by pressing SPACE or ESC.
+        /// </summary>
         if (!isGameOver && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))) 
         {
             if (isPaused)
@@ -92,6 +102,9 @@ public class LogicScript : MonoBehaviour
 
     public void UpdateScore()
     {
+        // <summary>
+        /// Updates the player's current distance travelled in set increments.
+        /// </summary>
         if (score < 100) {
             incFactor = 5f;
         }
@@ -113,6 +126,10 @@ public class LogicScript : MonoBehaviour
 
      public void UpdateScoreDisplay()
     {
+        /// <summary>
+        /// Visually updates the player's distance travelled and changes the
+        /// outline colour based on certain milestones (e.g. > 2500 m means a gold outline).
+        /// </summary>
     
         scoreText.text = playerScore + " m";
         if (playerScore < 100)
@@ -138,11 +155,17 @@ public class LogicScript : MonoBehaviour
 
     private void LoadHighScore()
     {
+        /// <summary>
+        /// Gets the player's all-time highscore from PlayerPrefs.
+        /// </summary>
         highScore = PlayerPrefs.GetInt("HighScore", 0);
     }
 
     public void UpdateHighScore()
     {
+        /// <summary>
+        /// Updates and saves the player's highscore if a new one is obtained.
+        /// </summary>
         if (playerScore > highScore)
         {
             highScore = playerScore;
@@ -152,11 +175,18 @@ public class LogicScript : MonoBehaviour
     }
 
     private void restartGame(){
+        /// <summary>
+        /// Restarts the game (after death).
+        /// </summary>
         SceneLoader.instance.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ShowMenu(bool isGameOver)
     {
+        /// <summary>
+        /// Shows the Pause/Game Over menu and sets its components accordingly.
+        /// </summary>
+        /// <param name = "isGameOver">Whether the game is over (i.e. player has died) or not.</param>
         menuPanel.SetActive(true);
         scoreText.text = "";
         pauseBtnImage.enabled = false;
@@ -184,6 +214,9 @@ public class LogicScript : MonoBehaviour
 
     public void HideMenu()
     {
+        /// <summary>
+        /// Hides the Pause/Game Over menu.
+        /// </summary>
         menuPanel.SetActive(false);
         pauseBtnImage.enabled = true;
         // Unfreeze the game
@@ -194,6 +227,9 @@ public class LogicScript : MonoBehaviour
 
     public void ResumeGame()
     {
+        /// <summary>
+        /// Resumes the current game.
+        /// </summary>
         audioManager.PlaySFX(audioManager.menu);
         audioManager.PlayMusic();
         HideMenu();
@@ -201,11 +237,17 @@ public class LogicScript : MonoBehaviour
 
     public void StartNewGame()
     {
+        /// <summary>
+        /// Starts a new game.
+        /// </summary>
         HideMenu();
         restartGame();
     }
 
     public void GameOver(){
+        /// <summary>
+        /// Player has died/game has ended.
+        /// </summary>
         isGameOver = true;
         UpdateHighScore();
         ShowMenu(true);
@@ -215,6 +257,10 @@ public class LogicScript : MonoBehaviour
 
     private void OnStartResumeButtonClicked()
     {
+        /// <summary>
+        /// Controls which version of the menu is shown based
+        /// on whether the player has paused.
+        /// </summary>
         if (isPaused)
         {
             ResumeGame(); 
@@ -227,12 +273,18 @@ public class LogicScript : MonoBehaviour
 
     public void OpenTutorial()
     {
+        /// <summary>
+        /// Starts the interactive tutorial.
+        /// </summary>
         HideMenu();
         SceneLoader.instance.LoadScene("Tutorial");
     }
 
     public void EndTutorial()
     {
+        /// <summary>
+        /// Ends the interactive tutorial.
+        /// </summary>
         HideMenu();
         isTutorial = false;
         PlayerPrefs.SetInt("HasCompletedTutorial", 1);
@@ -242,6 +294,9 @@ public class LogicScript : MonoBehaviour
 
     public void Quit()
     {
+        /// <summary>
+        /// Quits/closes the game.
+        /// </summary>
         #if UNITY_EDITOR
             Debug.Log("Quit Game");
         #else
@@ -252,35 +307,63 @@ public class LogicScript : MonoBehaviour
 
     public void PauseGame()
     {
+        /// <summary>
+        /// Pauses the current game.
+        /// </summary>
         audioManager.PauseMusic();
         audioManager.PlaySFX(audioManager.menu);
         ShowMenu(false);
         isPaused = true;
     }
 
+    // Get and set methods for the interactive tutorial to function.
     public bool getIsTutorial()
     {
+        /// <summary>
+        /// Get method for isTutorial variable.
+        /// </summary>
+        /// <returns>Whether the player is currently doing the tutorial.</returns>
         return isTutorial;
     }
 
     public void setIsTutorial(bool newIsTutorial)
     {
+        /// <summary>
+        /// Set method for isTutorial variable.
+        /// </summary>
+        /// <param name = "newIsTutorial">Whether the player has changed to or from the tutorial.</param>
         isTutorial = newIsTutorial;
     }
 
     public bool getDecreaseGlow(){
+        /// <summary>
+        /// Get method for decreaseGlow variable.
+        /// </summary>
+        /// <returns>Whether to decrease the bat's glow.</returns>
         return decreaseGlow;
     }
 
     public void setDecreaseGlow(bool b){
+        /// <summary>
+        /// Set method for decreaseGlow variable.
+        /// </summary>
+        /// <param name="b">Whether to change the bat's glow's ability to decay.</param>
         decreaseGlow = b;
     }
 
     public bool getIsEaten(){
+        /// <summary>
+        /// Get method for isEaten variable.
+        /// </summary>
+        /// <returns>Whether a firefly has been eaten.</returns>
         return isEaten;
     }
 
     public void setIsEaten(bool b){
+        /// <summary>
+        /// Set method for isEaten variable.
+        /// </summary>
+        /// <param name="b">Whether to change the fact that a firefly has been eaten.</param>
         isEaten = b;
     }
 }

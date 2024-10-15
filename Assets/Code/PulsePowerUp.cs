@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
-using UnityEditor.Animations;
 
 /// WORK IN PROGRESS
 /// <summary>

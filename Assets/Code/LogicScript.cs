@@ -7,6 +7,8 @@ public class LogicScript : MonoBehaviour
     private int playerScore;
     private int score;
     private int highScore;
+
+    private Outline textOutline;
     [SerializeField] Text scoreText;
     [SerializeField] Transform player;
     private float incFactor;
@@ -36,6 +38,7 @@ public class LogicScript : MonoBehaviour
     void Start()
     {
 
+        textOutline = scoreText.GetComponent<Outline>();
         UpdateScoreDisplay();
 
         Transform textTransform = menuPanel.transform.Find("GameOverText");
@@ -99,7 +102,8 @@ public class LogicScript : MonoBehaviour
         } 
         
         // Calculate score in meters, round to the nearest incFactor
-        score = (int)(Mathf.Floor(player.position.x / incFactor) * incFactor);
+        //score = (int)(Mathf.Floor(player.position.x / incFactor) * incFactor);
+        score = (int)(player.position.x * 50);
         if (score > playerScore){
             playerScore = score;
         }
@@ -108,11 +112,27 @@ public class LogicScript : MonoBehaviour
 
      public void UpdateScoreDisplay()
     {
-        // Update the score text in the UI
-        if (scoreText != null)
+    
+        scoreText.text = playerScore + " m";
+        if (playerScore < 100)
         {
-            scoreText.text = playerScore + " m";
-        }
+            // white
+            textOutline.effectColor = new Color32(255, 255, 255, 0);
+        } else if (playerScore < 500){
+            // blue
+            textOutline.effectColor = new Color32(4, 146, 194, 255);
+        } else if (playerScore < 1000){
+            // bronze
+            textOutline.effectColor = new Color32(205, 127, 50, 255);
+        } else if (playerScore < 2500){
+            // silver
+            textOutline.effectColor = new Color32(138, 141, 143, 255);
+        } else{
+            // gold
+            textOutline.effectColor = new Color32(212, 175, 55, 255);
+        } 
+        
+        
     }
 
     private void LoadHighScore()

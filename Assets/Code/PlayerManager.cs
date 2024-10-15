@@ -27,11 +27,11 @@ public class PlayerManager : MonoBehaviour
     private float innerRadiusFraction = 0.8f;
 
 
-    public float glowDecayRate = 0.15f;
-    public float fireflyGlow = 0.2f;
+    private float glowDecayRate = 0.02f;
+    private float fireflyGlow = 0.2f;
     private float minGlow = 0f; 
     private float maxGlow = 1f; 
-    public float startGlow = 0.5f;
+    private float startGlow = 0.7f;
     private float currentGlow;
 
     AudioManager audioManager;

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// A class that manages the movement of the cave background.
+/// </summary>
 public class BackgroundScroller : MonoBehaviour
 {
     [Range(-1f,1f)]
@@ -9,12 +12,18 @@ public class BackgroundScroller : MonoBehaviour
     [SerializeField] float widthMultiplier;
     private Material mat;
 
+    /// <summary>
+    /// Getting the background and intially setting it.
+    /// </summary>
     void Start()
     {
         mat=GetComponent<Renderer>().material;
         AdjustBackgroundScale();
     }
 
+    // <summary>
+    /// Adjusting the background as the player moves horizontally.
+    /// </summary>
     void Update()
     {
         // Move background with player
@@ -28,6 +37,9 @@ public class BackgroundScroller : MonoBehaviour
 
     }
 
+    // <summary>
+    /// Scales the background appropriately for the current scene based on the camera. 
+    /// </summary>
     void AdjustBackgroundScale()
     {
         Camera mainCamera = Camera.main;

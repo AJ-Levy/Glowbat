@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// A class that spawns in fireflies.
+/// </summary>
 public class FireflySpawner : MonoBehaviour
 {
     [SerializeField] GameObject fireflyPrefab; 
@@ -15,6 +18,9 @@ public class FireflySpawner : MonoBehaviour
 
     [SerializeField] PlayerManager player;
 
+    /// <summary>
+    /// Some intialisation.
+    /// </summary>
     void Start()
     {
         mainCamera = Camera.main;
@@ -22,6 +28,10 @@ public class FireflySpawner : MonoBehaviour
         nextSpawnPosition = Random.Range(minSpawnDistance, maxSpawnDistance);
     }
 
+    // <summary>
+    /// Keeps track of the player's rightward movement and spawns a firefly after
+    /// a randomly selected threshold distance has been achieved.
+    /// </summary>
     void Update()
     {
         float distanceMoved = mainCamera.transform.position.x - lastSpawnPosition;
@@ -36,6 +46,9 @@ public class FireflySpawner : MonoBehaviour
         }
     }
 
+    // <summary>
+    /// Instantiates a firefly offscreen (to the right) at a slightly varied height.
+    /// </summary>
     void SpawnFirefly()
     {
         Vector3 spawnPosition = new Vector3(

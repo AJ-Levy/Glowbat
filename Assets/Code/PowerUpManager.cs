@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// A class that spawns powerups.
+/// </summary>
 public class PowerUpManager : MonoBehaviour
 {
     [SerializeField] GameObject[] powerups;
@@ -16,6 +19,9 @@ public class PowerUpManager : MonoBehaviour
     private Camera mainCamera;
 
 
+    /// <summary>
+    /// Some intialisation.
+    /// </summary>
     void Start()
     {
         mainCamera = Camera.main;
@@ -23,6 +29,9 @@ public class PowerUpManager : MonoBehaviour
         spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
     }
 
+    /// <summary>
+    /// Spawning powerups after a random time interval has elapsed.
+    /// </summary>
     void Update()
     {
         timeSinceLastSpawn += Time.deltaTime;
@@ -35,6 +44,10 @@ public class PowerUpManager : MonoBehaviour
         }
     }
 
+    // <summary>
+    /// Ensures that only valid powerups spawn, offscreen and at varying heights.
+    /// In this case a shield powerup cannot spawn if the player already has one active.
+    /// </summary>
     private void SpawnPowerUp()
     {
         GameObject powerUpToSpawn = null;

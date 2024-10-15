@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+/// <summary>
+/// A class that governs the behaviour of the firefly consumable.
+/// </summary>
 public class FireflyAI : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
@@ -18,7 +21,9 @@ public class FireflyAI : MonoBehaviour
     private float innerRadiusFactor = 0.4f;
     private float flickerSpeed = 1.0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /// <summary>
+    /// Some intialisation stuff.
+    /// </summary>
     void Start()
     {
         originalYPos = transform.position.y;
@@ -26,7 +31,11 @@ public class FireflyAI : MonoBehaviour
         fireflyLight = gameObject.GetComponentInChildren<Light2D>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Move the firefly leftwards with a sinsuoidal y postion.
+    /// Simulate flickering by varying the firefly's light intensity and size.
+    /// Destroy it if it goes off screen.
+    /// </summary>
     void Update()
     {
        transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);

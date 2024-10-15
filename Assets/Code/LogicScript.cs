@@ -102,8 +102,9 @@ public class LogicScript : MonoBehaviour
         } 
         
         // Calculate score in meters, round to the nearest incFactor
-        //score = (int)(Mathf.Floor(player.position.x / incFactor) * incFactor);
-        score = (int)(player.position.x * 50);
+        score = (int)(Mathf.Floor(player.position.x / incFactor) * incFactor);
+        // for testing changing of score outline based on distance travelled
+        //score = (int)(player.position.x * 50);
         if (score > playerScore){
             playerScore = score;
         }

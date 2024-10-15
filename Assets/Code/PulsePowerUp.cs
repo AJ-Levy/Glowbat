@@ -4,6 +4,10 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEditor.Animations;
 
+/// WORK IN PROGRESS
+/// <summary>
+/// A light pulse powerup.
+/// </summary>
 public class PulsePowerUp : PowerUp
 {
     private Light2D globalLight; 
@@ -12,6 +16,9 @@ public class PulsePowerUp : PowerUp
     private float transitionDuration = 1f;
     private float transitionMultiplier = 0.01f;
 
+    /// <summary>
+    /// Getting reference to and intialising global light.
+    /// </summary>
     private void Start()
     {
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light2D>();
@@ -19,6 +26,10 @@ public class PulsePowerUp : PowerUp
         globalLight.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Starting the light pulse.
+    /// </summary>
+    /// <param name="player">A reference to the script that manages the player.</param>
     public override void ApplyPowerUp(PlayerManager player)
     {   
         
@@ -30,6 +41,10 @@ public class PulsePowerUp : PowerUp
         StartCoroutine(PulseEffect());
     }
 
+    /// <summary>
+    /// The global light increases in intensity then decreases before being disabled.
+    /// </summary>
+    /// <returns>An IEnumerator that can be used to yield execution in a coroutine.</returns>
     private IEnumerator PulseEffect()
     {
         globalLight.gameObject.SetActive(true);

@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// A class that controls the flow of the interactive tutorial.
+/// </summary>
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] GameObject[] popUps;
@@ -13,6 +16,9 @@ public class TutorialManager : MonoBehaviour
 
     private LogicScript logic;
 
+    /// <summary>
+    /// Some intialisation to set the tutorial as active.
+    /// </summary>
     void Start(){
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
 
@@ -23,6 +29,15 @@ public class TutorialManager : MonoBehaviour
         globalLight.SetActive(false);
         lightComp.intensity = 0f;
     }
+
+    /// <summary>
+    /// The tutorial shows hints going through five key stages after which it ends.
+    /// 1. Horizontal movement.
+    /// 2. Vertical movement.
+    /// 3. Glow decay.
+    /// 4. Firefly consumption.
+    /// 5. Obstacle avoidance.
+    /// </summary>
     void Update()
     {
         for (int i = 0; i < popUps.Length; i++)
